@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products | HyperAV</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>HyperAV Products</h1>
+    <nav>
+      <button onclick="location.href='index.html'">Home</button>
+      <button onclick="location.href='cart.html'">Cart (<span id="cart-count">0</span>)</button>
+    </nav>
+    <input type="text" id="search-bar" placeholder="Search for products..." onkeyup="searchProducts()">
+  </header>
+
+  <main class="product-grid" id="product-list">
+    <!-- Products will be loaded here -->
+  </main>
+
+  <script src="cart.js"></script>
+  <script>
+    const products = [
+      { name: '4K OLED TV', price: 899, category: 'TVs', image: 'images/4koledtv.webp' },
+      { name: 'HD Home Projector', price: 499, category: 'Projectors', image: 'images/hd home projector.jpeg' },
+      { name: 'Surround Sound Speakers', price: 299, category: 'Speakers', image: 'images/surrond sound speakers.jpeg' },
+      { name: 'High-End Amplifier', price: 349, category: 'Amplifiers', image: 'images/hugh end amplifiers.jpeg' },
+      { name: 'Premium HDMI Cable', price: 19, category: 'Cables', image: 'images/hdmi cable.jpeg' },
+      { name: 'Ultra HD Blu-ray Player', price: 199, category: 'Players', image: 'images/ultra hd blu ray player.jpeg' },
+      { name: 'Cinema Recliner Chair', price: 599, category: 'Furniture', image: 'images/cinema recliner chair.jpeg' },
+      { name: 'Wireless Subwoofer', price: 249, category: 'Speakers', image: 'images/wireless sub woofer.jpeg' },
+      { name: 'Home Cinema Receiver', price: 399, category: 'Amplifiers', image: 'images/home cinema reciever.jpeg' },
+      { name: 'Projection Screen', price: 150, category: 'Projectors', image: 'images/projection screen.jpeg' }
+    ];
+
+    function loadProducts() {
+      const productList = document.getElementById('product-list');
+      products.forEach(product => {
+        const productDiv = document.createElement('div');
+        productDiv.className = 'product';
+        productDiv.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" style="width:100%; height:200px; object-fit:cover;">
+          <h3>${product.name}</h3>
+          <p>Price: £${product.price}</p>
+          <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+        `;
+        productList.appendChild(productDiv);
+      });
+    }
+
+    function searchProducts() {
+      const searchValue = document.getElementById('search-bar').value.toLowerCase();
+      const filteredProducts = products.filter(product => 
+        product.name.toLowerCase().includes(searchValue)
+      );
+      displayProducts(filteredProducts);
+    }
+
+    function displayProducts(productsToDisplay) {
+      const productList = document.getElementById('product-list');
+      productList.innerHTML = '';
+      productsToDisplay.forEach(product => {
+        const productDiv = document.createElement('div');
+        productDiv.className = 'product';
+        productDiv.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" style="width:100%; height:200px; object-fit:cover;">
+          <h3>${product.name}</h3>
+          <p>Price: £${product.price}</p>
+          <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+        `;
+        productList.appendChild(productDiv);
+      });
+    }
+
+    loadProducts();
+  </script>
+</body>
+</html>
